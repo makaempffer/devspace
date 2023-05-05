@@ -9,11 +9,14 @@ import {
   Html,
   Meta,
   Routes,
+  Route,
   Scripts,
   Title,
 } from "solid-start";
 import "./root.css";
 import Navbar from "./components/Navbar";
+import Login from "./components/Login";
+import Register from "./components/Register";
 
 export default function Root() {
   return (
@@ -28,6 +31,8 @@ export default function Root() {
           <ErrorBoundary>
             <Navbar></Navbar>
             <Routes>
+              <Route path="/login" component={Login}></Route>
+              <Route path="/register" component={Register}></Route>
               <FileRoutes />
             </Routes>
           </ErrorBoundary>
