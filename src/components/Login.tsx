@@ -13,12 +13,12 @@ export default function Login() {
 
                 <div class="flex content-evenly gap-5 justify-center">
                     <label class="" for="email">Email</label>
-                    <input class="text-black" type="email" name="email" value={email()} onChange={(e) => setEmail(e.currentTarget.value)} placeholder="example@email.com" required/>
+                    <input class="text-black" type="email" name="email" value={email()} onLoad={(e) => setEmail(e.currentTarget.value)} onChange={(e) => setEmail(e.currentTarget.value)} placeholder="example@email.com" required/>
 
                 </div>
                 <div class="flex content-center gap-5 justify-center mt-5">
                     <label for="password">Password</label>
-                    <input class="text-black" type="password" value={email()} onChange={(e) => setPassword(e.currentTarget.value)}  required/>
+                    <input class="text-black" type="password" value={email()} onLoad={(e) => setPassword(e.currentTarget.value)} onChange={(e) => setPassword(e.currentTarget.value)}  required/>
                 </div>
                 <div class="flex content-center justify-center mt-10 gap-8">
                     <button class="border rounded p-2" onClick={() => loginWithPass(email(), password())}>Login</button>
@@ -37,17 +37,16 @@ const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
 const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 const supabase = createClient(supabaseUrl, supabaseKey);
 
-async function getCurrentUser() {
-    const { data: {user} } = await supabase.auth.getUser();
-    return user;
-}
-
 
 async function loginWithPass(email: string, password: string) {
     const {data, error} = await supabase.auth.signInWithPassword({
         email: email,
         password: password
     })
+    if (data) console.log('Login attemp with data: ' + JSON.stringify(data)) 
+    else {
+        console.warn(error);
+    }
 }
 
 async function loginWithEmail(email: string) {
